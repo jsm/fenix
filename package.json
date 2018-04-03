@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "NODE_ENV=production && npm run clean && webpack"
+    "build": "npm run clean && webpack"
   },
   "license": "MIT",
   "devDependencies": {
@@ -30,8 +30,10 @@
     "ts-loader": "^4.1.0",
     "typescript": "^2.8.1",
     "typescript-eslint-parser": "^14.0.0",
+    "typings-for-css-modules-loader": "^1.7.0",
     "url-loader": "^1.0.1",
-    "webpack": "3.11.0"
+    "webpack": "4.4.1",
+    "webpack-cli": "^2.0.13"
   },
   "dependencies": {
     "lodash": "^4.17.5",
