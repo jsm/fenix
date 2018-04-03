@@ -1,0 +1,13 @@
+extends: airbnb
+parser: typescript-eslint-parser
+plugins:
+  - react
+  - jsx-a11y
+  - import
+  - typescript
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+    modules: true
+  ecmaVersion: 6
+  sourceType: module

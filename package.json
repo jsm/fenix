@@ -1,0 +1,41 @@
+{
+  "name": "fenix",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "NODE_ENV=production && npm run clean && webpack"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^16.3.3",
+    "@types/react-dom": "^16.0.4",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-typescript": "^0.11.0",
+    "html-webpack-plugin": "^3.2.0",
+    "image-webpack-loader": "^4.2.0",
+    "node-sass-chokidar": "^1.2.2",
+    "rimraf": "^2.6.2",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
+    "ts-loader": "^4.1.0",
+    "typescript": "^2.8.1",
+    "typescript-eslint-parser": "^14.0.0",
+    "url-loader": "^1.0.1",
+    "webpack": "3.11.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.5",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
+  }
+}
