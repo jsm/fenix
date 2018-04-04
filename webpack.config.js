@@ -1,32 +1,30 @@
-const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-const VENDOR_LIBS = ['lodash'];
+// const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: {
     app: './src/index.tsx',
-    vendor: VENDOR_LIBS,
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.[name].[chunkhash].js',
+    filename: '[name].[chunkhash].js',
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.scss', '.d.ts'],
   },
   module: {
     rules: [
-      //   {
-      //     use: 'babel-loader',
-      //     test: /\.jsx?$/,
-      //     exclude: /node_modules/,
-      //   },
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
+      },
+      {
+        test: /\.tsx$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/,
@@ -40,7 +38,6 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        // use: ['style-loader', 'css-loader', 'sass-loader'],
         use: [
           'style-loader',
           {
@@ -60,15 +57,10 @@ module.exports = {
     ],
   },
   plugins: [
-    // new webpack.optimize.splitChunks({
-    //   name: ['vendor', 'manifest'],
-    // }),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
     }),
-    // new webpack.DefinePlugin({
-    //   "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
-    // })
+    // new ErrorOverlayPlugin(),
   ],
   optimization: {
     // minimize: false,

@@ -1,4 +1,6 @@
-extends: airbnb
+extends:
+  - airbnb
+  - plugin:prettier/recommended
 parser: typescript-eslint-parser
 plugins:
   - react
@@ -11,3 +13,21 @@ parserOptions:
     modules: true
   ecmaVersion: 6
   sourceType: module
+
+settings:
+  # import/extensions:
+  #   - off
+  #   - never
+  import/resolver:
+    webpack: true
+    eslint-import-resolver-typescript: true
+    node:
+      extensions:
+        - .js
+        - .jsx
+        - .ts
+        - .tsx
+env:
+  browser: true
+rules:
+  react/jsx-filename-extension: 0
