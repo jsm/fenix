@@ -1,12 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
   mode: 'development',
-  entry: {
-    app: './src/index.tsx',
-  },
+  entry: ['./src/index.tsx'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].[chunkhash].js',
@@ -39,7 +39,7 @@ module.exports = {
       {
         test: /\.s?css$/,
         use: [
-          'style-loader',
+          isProd ? MiniCssExtractPlugin.loader : 'style-loader',
           {
             loader: 'typings-for-css-modules-loader?modules&sass',
             options: {
@@ -51,6 +51,8 @@ module.exports = {
               localIdentName: '[local]___[hash:base64:5]',
             },
           },
+
+          'postcss-loader',
           'sass-loader',
         ],
       },
@@ -60,10 +62,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.html',
     }),
-    // new ErrorOverlayPlugin(),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
   ],
   optimization: {
-    // minimize: false,
+    minimize: false,
     // runtimeChunk: {
     //   name: 'vendor',
     // },
