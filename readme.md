@@ -13,19 +13,9 @@ yarn run serve
 
 ### VSCode
 
-#### EsLint
+#### TsLint
 
-* Install ESLint Extension
-* In your workspace or user settings, add:
-
-```json
-"eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ]
-```
+* Install TSLint Extension
 
 #### Prettier
 
@@ -33,6 +23,15 @@ yarn run serve
 * In your workspace or user settings, add:
 
 ```json
-  "prettier.eslintIntegration": true,
   "editor.formatOnSave": true,
 ```
+
+#### Redux Dev Tools
+
+* [Install Browser Extension](https://github.com/zalmoxisus/redux-devtools-extension#installation)
+
+#### TS Syntax Highlighting
+
+* Prettier breaks function arguments into thier own lines. This behaviour is not overwriteable.
+* This breaks the current TS syntax highlighting engine which ships with VSCode. [Github Issue](https://github.com/Microsoft/TypeScript-TmLanguage/issues/481).
+* Workaround - use [a development branch version](https://marketplace.visualstudio.com/items?itemName=ms-vscode.typescript-javascript-grammar) of the TS syntax highlighting engine.

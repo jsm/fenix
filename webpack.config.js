@@ -19,12 +19,13 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
+        exclude: [/(node_modules|bin)/],
       },
       {
         test: /\.tsx$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
+        enforce: 'pre',
+        exclude: /(node_modules|bin)/,
+        loader: 'tslint-loader',
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/,

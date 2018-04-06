@@ -1,0 +1,13 @@
+{
+  "extends": [
+    "tslint-config-airbnb",
+    "tslint-config-prettier",
+    "tslint-eslint-rules",
+    "tslint-react"
+  ],
+  "rules": {
+    "import-name": false,
+    // This rule is here for now because of https://github.com/palantir/tslint-react/issues/120
+    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"]
+  }
+}
