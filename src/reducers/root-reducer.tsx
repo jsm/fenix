@@ -1,5 +1,5 @@
 import { combineReducers, ReducersMapObject } from 'redux';
-import user from './user';
+import user from './user-reducer';
 
 const combinedReducer = combineReducers({ user } as ReducersMapObject);
 

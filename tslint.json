@@ -6,8 +6,16 @@
     "tslint-react"
   ],
   "rules": {
-    "import-name": false,
-    // This rule is here for now because of https://github.com/palantir/tslint-react/issues/120
-    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"]
+    "import-name": false, // This rule is here for now because of https://github.com/palantir/tslint-react/issues/120
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-pascal-case"
+    ],
+    "jsx-no-multiline-js": false,
+    "no-else-after-return": false, // TODO: discuss
+    "jsx-no-lambda": false
+    // https://cdb.reacttraining.com/react-inline-functions-and-performance-bdff784f5578
   }
 }
