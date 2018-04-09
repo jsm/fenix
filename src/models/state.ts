@@ -1,4 +1,4 @@
-import { UserState } from '../reducers/user-reducer';
+import { UserState } from '../reducers/user';
 
 export interface ReduxState {
   user: UserState;

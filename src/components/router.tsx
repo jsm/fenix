@@ -8,20 +8,21 @@ import {
   Redirect,
 } from 'react-router-dom';
 
-import * as Model from './models';
-import { Actions } from './actions';
-import Auth from './components/auth';
-import Dashboard from './components/dashboard';
+import * as Model from '../models';
+import { Actions } from '../actions';
+import Auth from './auth';
+import Dashboard from './dashboard';
 
 const Settings = () => <h3>Settings</h3>;
+const settingRoute: Model.Route = '/settings';
+const authRoute: Model.Route = '/auth';
+const dashboardRoute: Model.Route = '/dashboard';
 
 interface PrivateRouteProps {
-  component: any; // TODO: - how to type?
+  component: any;
   isAuthed: boolean;
   path: Model.Route;
 }
-
-// TODO: How do we typecheck passed into <Route/>/ <Link/>, <Redirect/>?
 
 const PrivateRoute: React.SFC<PrivateRouteProps> = ({
   isAuthed,
@@ -36,7 +37,7 @@ const PrivateRoute: React.SFC<PrivateRouteProps> = ({
       ) : (
         <Redirect
           to={{
-            pathname: '/auth',
+            pathname: authRoute,
             state: { from: props.location },
           }}
         />
@@ -56,39 +57,39 @@ interface DispatchToProps {
 
 type Props = StateToProps & DispatchToProps;
 
-const App: React.SFC<Props> = ({ isAuthed, signOutUser, signInUser }) => (
-  <Router>
-    <div style={{ backgroundColor: 'lightblue' }}>
-      {!isAuthed ? (
-        <Link to="/auth">Login</Link>
-      ) : (
-        <button
-          onClick={() => {
-            signOutUser();
-            // history.push('/');
-          }}
-        >
-          Sign out
-        </button>
-      )}{' '}
-      <Link to={{ pathname: '/dashboard' } as { [key: string]: Model.Route }}>
-        Dashboard
-      </Link>{' '}
-      <Link to={'/settings' as Model.Route}>Settings</Link>
-      {/* TODO: why does this not work? */}
-      <Route
-        path="/auth" // TODO: - how to type?
-        render={props => <Auth {...props} onSignIn={signInUser} />}
-      />
-      <PrivateRoute
-        path="/dashboard"
-        component={Dashboard}
-        isAuthed={isAuthed}
-      />
-      <PrivateRoute path="/settings" component={Settings} isAuthed={isAuthed} />
-    </div>
-  </Router>
-);
+class AppRouter extends React.Component<Props> {
+  render() {
+    return (
+      <Router>
+        <div>
+          {!this.props.isAuthed ? (
+            <Link to={authRoute}>Login</Link>
+          ) : (
+            <button onClick={this.props.signOutUser}>Sign Out</button>
+          )}{' '}
+          <Link to={dashboardRoute}>Dashboard</Link>{' '}
+          <Link to={settingRoute}>Settings</Link>
+          <Route
+            path={authRoute}
+            render={props => (
+              <Auth {...props} onSignIn={this.props.signInUser} />
+            )}
+          />
+          <PrivateRoute
+            path={dashboardRoute}
+            component={Dashboard}
+            isAuthed={this.props.isAuthed}
+          />
+          <PrivateRoute
+            path={settingRoute}
+            component={Settings}
+            isAuthed={this.props.isAuthed}
+          />
+        </div>
+      </Router>
+    );
+  }
+}
 
 const mapStateToProps = (state: Model.ReduxState): StateToProps => ({
   isAuthed: _.get(state, ['user', 'authToken'], false),
@@ -104,6 +105,6 @@ const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchToProps => {
 const AppConnected: React.ComponentClass<{}> = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(App);
+)(AppRouter);
 
 export default AppConnected;

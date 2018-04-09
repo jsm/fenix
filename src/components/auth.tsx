@@ -1,16 +1,16 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import { Redirect } from 'react-router-dom';
+import * as H from 'history';
 import * as authStyle from '../styles/auth.scss';
 import * as Model from '../models';
 
 interface Props {
-  location: any; // TODO: find types
+  location: H.Location;
   onSignIn: (fakeToken: string) => void;
 }
 
 const defaultPath: Model.Route = '/dashboard';
-// TODO: type path names
 
 interface State {
   redirectToReferrer: boolean;
@@ -21,7 +21,7 @@ class Auth extends React.Component<Props, State> {
   };
 
   login = () => {
-    this.props.onSignIn('123'); // TODO: Fake Token
+    this.props.onSignIn('123'); // TODO: remove fake token
     this.setState({ redirectToReferrer: true });
   };
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import Router from './router';
+import Router from './components/router';
 import './styles/normalize.scss';
 import store from './reducers';
 
