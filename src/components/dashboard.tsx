@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
-import * as style from '../styles/styles.scss';
+
 import { Actions } from '../actions';
 import * as Model from '../models';
+import * as style from '../styles/styles.scss';
 
 interface StateToProps {
   firstName: string;

@@ -6,7 +6,7 @@
     "tslint-react"
   ],
   "rules": {
-    "import-name": false, // This rule is here for now because of https://github.com/palantir/tslint-react/issues/120
+    "import-name": false,
     "variable-name": [
       true,
       "ban-keywords",
@@ -15,7 +15,15 @@
     ],
     "jsx-no-multiline-js": false,
     "no-else-after-return": ["error", { "allowElseIf": true }],
-    "jsx-no-lambda": false
-    // https://cdb.reacttraining.com/react-inline-functions-and-performance-bdff784f5578
+    "jsx-no-lambda": false,
+    "no-consecutive-blank-lines": true,
+    "ordered-imports": [
+      true,
+      {
+        "grouped-imports": true
+      }
+    ]
   }
+  // "jsx-no-lambda" https://cdb.reacttraining.com/react-inline-functions-and-performance-bdff784f5578
+  // "import-name" https://github.com/palantir/tslint-react/issues/120
 }

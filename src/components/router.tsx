@@ -1,15 +1,16 @@
-import * as React from 'react';
 import * as _ from 'lodash';
+import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import {
   BrowserRouter as Router,
-  Route,
   Link,
   Redirect,
+  Route,
 } from 'react-router-dom';
 
-import * as Model from '../models';
 import { Actions } from '../actions';
+import * as Model from '../models';
+
 import Auth from './auth';
 import Dashboard from './dashboard';
 

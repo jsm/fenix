@@ -1,5 +1,5 @@
-import * as ActionModel from '../actions/model';
 import { isA } from '../actions';
+import * as ActionModel from '../actions/model';
 
 export interface UserState {
   readonly userId?: string;

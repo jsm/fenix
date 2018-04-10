@@ -1,9 +1,10 @@
-import * as React from 'react';
-import * as _ from 'lodash';
-import { Redirect } from 'react-router-dom';
 import * as H from 'history';
-import * as authStyle from '../styles/auth.scss';
+import * as _ from 'lodash';
+import * as React from 'react';
+import { Redirect } from 'react-router-dom';
+
 import * as Model from '../models';
+import * as authStyle from '../styles/auth.scss';
 
 interface Props {
   location: H.Location;
