@@ -12,7 +12,7 @@ module.exports = {
     filename: '[name].[chunkhash].js',
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.scss', '.d.ts'],
+    extensions: ['.tsx', '.ts', '.js', '.scss'],
   },
   module: {
     rules: [
