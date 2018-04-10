@@ -9,7 +9,7 @@
     "sourceMap": true,
     "module": "es2015",
     "noUnusedLocals": true,
-    "lib": ["dom", "es2015.iterable", "es5", "scripthost"]
+    "lib": ["dom", "es2015.iterable", "es5", "es6", "scripthost"]
   },
   "include": ["src/**/*.ts*", "config/**/*", "typings/**/*", "bin/**/*"]
 }
