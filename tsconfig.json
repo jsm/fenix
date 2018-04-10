@@ -8,7 +8,8 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "module": "es2015",
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "lib": ["dom", "es2015.iterable", "es5", "scripthost"]
   },
   "include": ["src/**/*.ts*", "config/**/*", "typings/**/*", "bin/**/*"]
 }
