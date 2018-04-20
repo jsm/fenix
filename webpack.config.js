@@ -10,6 +10,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].[chunkhash].js',
+    crossOriginLoading: 'use-credentials',
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.scss'],

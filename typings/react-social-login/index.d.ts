@@ -21,6 +21,7 @@ declare module 'react-social-login' {
 
   interface SocialLoginProps extends React.Props<{}> {
     triggerLogin: React.MouseEventHandler<{}>;
+    triggerLogout: React.MouseEventHandler<{}>;
   }
 
   type SocialLoginFN = (props: SocialLoginProps) => JSX.Element;

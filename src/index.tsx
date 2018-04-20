@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { CookiesProvider } from 'react-cookie';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
@@ -8,7 +9,9 @@ import './styles/normalize.scss';
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router />
+    <CookiesProvider>
+      <Router />
+    </CookiesProvider>
   </Provider>,
   document.getElementById('root'),
 );

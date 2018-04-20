@@ -1,5 +1,5 @@
-import * as _ from 'lodash';
 import * as React from 'react';
+import { CookieComponentProps, withCookies } from 'react-cookie';
 import { connect, Dispatch } from 'react-redux';
 import {
   BrowserRouter as Router,
@@ -8,11 +8,10 @@ import {
   Route,
 } from 'react-router-dom';
 
-import { Actions } from '../actions';
 import * as Model from '../models';
 
-import Auth from './auth';
 import Dashboard from './dashboard';
+import Login from './login';
 
 const Settings = () => <h3>Settings</h3>;
 const settingRoute: Model.Route = '/settings';
@@ -47,44 +46,45 @@ const PrivateRoute: React.SFC<PrivateRouteProps> = ({
   />
 );
 
-interface StateToProps {
-  isAuthed: boolean;
-}
+interface StateToProps {}
 
-interface DispatchToProps {
-  signInUser: (fakeToken: string) => void;
-  signOutUser: () => void;
-}
+interface DispatchToProps {}
 
-type Props = StateToProps & DispatchToProps;
+type Props = StateToProps & DispatchToProps & CookieComponentProps;
 
 class AppRouter extends React.Component<Props> {
+  signOutUser = () => {
+    this.props.cookies.remove('auth_token');
+  };
+
+  isAuthed(): boolean {
+    console.log(this.props.cookies.get('auth_token'));
+    return !!this.props.cookies.get('auth_token');
+  }
+
   render() {
+    const isAuthed = this.isAuthed();
+
     return (
       <Router>
         <div>
-          {!this.props.isAuthed ? (
+          {!isAuthed ? (
             <Link to={authRoute}>Login</Link>
           ) : (
-            <button onClick={this.props.signOutUser}>Sign Out</button>
+            <button onClick={this.signOutUser}>Sign Out</button>
           )}{' '}
           <Link to={dashboardRoute}>Dashboard</Link>{' '}
           <Link to={settingRoute}>Settings</Link>
-          <Route
-            path={authRoute}
-            render={props => (
-              <Auth {...props} onSignIn={this.props.signInUser} />
-            )}
-          />
+          <Route path={authRoute} render={props => <Login {...props} />} />
           <PrivateRoute
             path={dashboardRoute}
             component={Dashboard}
-            isAuthed={this.props.isAuthed}
+            isAuthed={isAuthed}
           />
           <PrivateRoute
             path={settingRoute}
             component={Settings}
-            isAuthed={this.props.isAuthed}
+            isAuthed={isAuthed}
           />
         </div>
       </Router>
@@ -92,20 +92,15 @@ class AppRouter extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: Model.ReduxState): StateToProps => ({
-  isAuthed: _.get(state, ['user', 'authToken'], false),
-});
+const mapStateToProps = (state: Model.ReduxState): StateToProps => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchToProps => {
-  return {
-    signInUser: (fakeToken: string) => dispatch(Actions.signInUser(fakeToken)),
-    signOutUser: () => dispatch(Actions.signOutUser()),
-  };
+  return {};
 };
 
 const AppConnected: React.ComponentClass<{}> = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AppRouter);
+)(withCookies(AppRouter));
 
 export default AppConnected;

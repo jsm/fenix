@@ -23,16 +23,17 @@ interface State {
 
 interface Props {
   location: H.Location;
-  onSignIn: (fakeToken: string) => void;
 }
 
 const defaultPath: Model.Route = '/dashboard';
 
-const SocialButton = SocialLogin(({ children, triggerLogin, ...props }) => (
-  <button onClick={triggerLogin} {...props}>
-    {children}
-  </button>
-));
+const SocialButton = SocialLogin(
+  ({ children, triggerLogin, triggerLogout, ...props }) => (
+    <button onClick={triggerLogin} {...props}>
+      {children}
+    </button>
+  ),
+);
 
 const initialState: State = {
   redirectToReferrer: false,
@@ -43,19 +44,17 @@ const initialState: State = {
   jwt: '',
 };
 
-class Auth extends React.Component<Props, State> {
+class Login extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = initialState;
   }
 
-  handleLoggedIn = (user: User, jwt: string) => {
+  handleLoggedIn = (user: User) => {
     this.setState({
       user,
-      jwt,
       phase: 'logged_in',
     });
-    this.props.onSignIn(jwt);
   };
 
   handleLoginOrSignupEmail = async () => {
@@ -73,19 +72,27 @@ class Auth extends React.Component<Props, State> {
   handleSignupEmail = async () => {
     const response = await axios.post(
       'http://localhost:8080/v1/auth/signup_email',
-      { email: this.state.email, password: this.state.password },
+      {
+        email: this.state.email,
+        password: this.state.password,
+      },
+      { withCredentials: true },
     );
     const data = response.data.data;
-    this.handleLoggedIn(data.user, data.jwt);
+    this.handleLoggedIn(data.user);
   };
 
   handleLoginEmail = async () => {
     const response = await axios.post(
       'http://localhost:8080/v1/auth/login_email',
-      { email: this.state.email, password: this.state.password },
+      {
+        email: this.state.email,
+        password: this.state.password,
+      },
+      { withCredentials: true },
     );
     const data = response.data.data;
-    this.handleLoggedIn(data.user, data.jwt);
+    this.handleLoggedIn(data.user);
   };
 
   handleGoogleSignin = async (user: SocialLoginTypes.UserResponseGoogle) => {
@@ -93,9 +100,10 @@ class Auth extends React.Component<Props, State> {
     const response = await axios.post(
       'http://localhost:8080/v1/auth/login_or_signup_sso',
       { token, provider: user._provider },
+      { withCredentials: true },
     );
     const data = response.data.data;
-    this.handleLoggedIn(data.user, data.jwt);
+    this.handleLoggedIn(data.user);
   };
 
   handleLinkedInSignin = async (
@@ -105,9 +113,10 @@ class Auth extends React.Component<Props, State> {
     const response = await axios.post(
       'http://localhost:8080/v1/auth/login_or_signup_sso',
       { token, provider: user._provider },
+      { withCredentials: true },
     );
     const data = response.data.data;
-    this.handleLoggedIn(data.user, data.jwt);
+    this.handleLoggedIn(data.user);
   };
 
   handleChange = (field: 'email' | 'password') => (
@@ -128,6 +137,7 @@ class Auth extends React.Component<Props, State> {
     axios({
       url: 'http://localhost:8080/v1/auth/test',
       headers: { JWT: this.state.jwt },
+      withCredentials: true,
     });
   };
 
@@ -149,6 +159,7 @@ class Auth extends React.Component<Props, State> {
           provider="google"
           appId="267153149984-lhlv4uc709681kh1e5jv0qf78mpd9iep"
           onLoginSuccess={this.handleGoogleSignin}
+          onLogoutFailure={e => console.log(e)}
         >
           Login with Google
         </SocialButton>
@@ -156,6 +167,7 @@ class Auth extends React.Component<Props, State> {
           provider="linkedin"
           appId="77ua3vzzii2bzq"
           onLoginSuccess={this.handleLinkedInSignin}
+          onLogoutFailure={e => console.log(e)}
         >
           Login with LinkedIn
         </SocialButton>
@@ -163,6 +175,7 @@ class Auth extends React.Component<Props, State> {
           provider="facebook"
           appId="988885377935265"
           onLoginSuccess={this.handleGoogleSignin}
+          onLogoutFailure={e => console.log(e)}
         >
           Login with Facebook
         </SocialButton>
@@ -267,4 +280,4 @@ class Auth extends React.Component<Props, State> {
   }
 }
 
-export default Auth;
+export default Login;
